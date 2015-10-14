@@ -21,7 +21,10 @@ const rl = readline.createInterface({
     output: process.stdout
 });
 
-const lunches = {};
+const lunches = {
+    timestamp: null,
+    items: new Map()
+};
 
 
 function getOAuth2Token (client, callback) {
@@ -76,7 +79,7 @@ slack.on('message', event => {
     user = slack.getUserByID(event.user);
     channel = slack.getChannelGroupOrDMByID(event.channel);
 
-    lunch = lunches[user.name];
+    lunch = lunches.items.get(user.name);
     response = '@' + user.name + ': ';
 
 
@@ -101,7 +104,7 @@ slack.on('message', event => {
         }
         else
         {
-            channel.send(response + lunches[user.name]);
+            channel.send(response + lunch);
         }
     }
 
@@ -146,23 +149,66 @@ getOAuth2Token(oauth2Client, () => {
         key: config.lunchSpreadsheetId,
         auth: oauth2Client
     }, (googleSpreadsheetsErr, spreadsheet) => {
-        if (googleSpreadsheetsErr) { throw googleSpreadsheetsErr; }
-        spreadsheet.worksheets[config.lunchSheetIndex].cells({
-            range: config.lunchCellsRange
-        }, (err, data) => {
-            var i;
-            if (err)
+        var sheet;
+        if (googleSpreadsheetsErr)
+        {
+            throw googleSpreadsheetsErr;
+        }
+        sheet = spreadsheet.worksheets[config.lunchSheetIndex];
+
+        sheet.cells({
+            range: config.lunchCellsNicksRange
+        }, (nicksErr, nicksData) => {
+            let nicks = new Map();
+            if (nicksErr)
             {
-                throw err;
+                throw nicksErr;
+            }
+            console.log('Got nick names from lunch spreadsheet.');
+
+            for (let row in nicksData.cells)
+            {
+                for (let col in nicksData.cells[row])
+                {
+                    let nick = nicksData.cells[row][col].value;
+                    if (nick)
+                    {
+                        nicks.set(col, nick);
+                    }
+                }
+                // should be just one, so ignore the rest
+                break;
             }
 
-            for (i in data.cells[5])
-            {
-                lunches[data.cells[5][i].value] = data.cells[dayOfWeekIdx + 6][i].value;
-            }
-            console.log('Lunches:', lunches);
+            sheet.cells(
+                {range: config.lunchCellsRange},
+                (lunchesErr, lunchesData) => {
+                    var row;
+                    if (lunchesErr)
+                    {
+                        throw lunchesErr;
+                    }
+                    console.log('Got lunches from lunch spreadsheet.');
 
-            slack.login();
+                    for (row in lunchesData.cells)
+                    {
+                        break;
+                    }
+                    row = Number(row) + dayOfWeekIdx;
+
+                    lunches.items.clear();
+                    lunches.timestamp = Date.now();
+                    for (let col of nicks.keys())
+                    {
+                        lunches.items.set(
+                            nicks.get(col),
+                            lunchesData.cells[row][col].value
+                        );
+                    }
+
+                    slack.login();
+                }
+            );
         });
 
     });
