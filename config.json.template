@@ -1,0 +1,31 @@
+{
+    // Google OAuth2
+    //
+    // 1. Head to https://code.google.com/apis/console
+    // 2. Create a project
+    // 3. Enable Drive API
+    // 4. APIs & Auth → Credentials
+    // 5. Create OAuth 2.0 client ID
+    "oauthClientId": "",
+    "oauthClientSecret": "",
+    "oauthRedirectUrl": "https://example.com",
+
+
+    // Google Spreadsheet with lunches
+    // You will find it in spreadsheet's URL
+    "lunchSpreadsheetId": "",
+    // e.g. R5C2:R5C25
+    "lunchCellsNicksRange": "",
+    "lunchCellsRange": "",
+    "lunchSheetIndex": 0,
+
+
+    // Slack
+    //
+    // Head to https://YOUR_SUBDOMAIN.slack.com/services/new/bot
+    "slackToken": ""
+
+
+    // Remove comments before using as config.json as they are illegal
+    // in JSON files
+}
