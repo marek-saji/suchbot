@@ -1,0 +1,49 @@
+{
+  "name": "suchbot",
+  "version": "1.0.0",
+  "description": "A bot.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node --harmony index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "slack",
+    "bot",
+    "lunch"
+  ],
+  "author": "Marek ‘saji’ Augustynowicz <marek.aug@gmail.com> (https://twitter.com/saji_)",
+  "license": "ISC",
+  "engines": {
+    "node": ">=0.12"
+  },
+  "dependencies": {
+    "google-spreadsheets": "^0.4.2",
+    "googleapis": "^2.1.5",
+    "slack-client": "^1.4.1"
+  },
+  "eslintConfig": {
+    "env": {
+      "es6": true,
+      "node": true
+    },
+    "rules": {
+      "indent": [
+          2,
+          4
+      ],
+      "quotes": [
+        2,
+        "single",
+        "avoid-escape"
+      ],
+      "yoda": [
+        2,
+        "always",
+        {
+          "onlyEquality": true
+        }
+      ]
+    }
+  }
+}
