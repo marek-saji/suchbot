@@ -1,9 +1,10 @@
 'use strict';
 
-const config = require('./config');
+const config = require('./config.json');
 const googleSpreadsheets = require('google-spreadsheets');
 const Slack = require('slack-client');
 
+const fs = require('fs');
 const readline = require('readline');
 
 const google = require('googleapis');
@@ -25,25 +26,41 @@ const lunches = {};
 
 function getOAuth2Token (client, callback) {
     // generate consent page url
-    var url = client.generateAuthUrl({
-        // will return a refresh token
-        access_type: 'offline', // eslint-disable-line camelcase
-        // can be a space-delimited string or an array of scopes
-        scope: 'https://www.googleapis.com/auth/drive'
-    });
+    var url;
 
-    console.log('1. Visit the url:', url);
-    console.log('2. You will end up at ' + config.oauthRedirectUrl + '?code=<CODE>#');
-    rl.question('Enter the code here: ', (code) => {
-        // request access token
-        client.getToken(code, (err, tokens) => {
-            if (err) { throw err; }
-            // set tokens to the client
-            // TODO: tokens should be set by OAuth2 client.
-            client.setCredentials(tokens);
-            callback();
+    if (config.oauth2Token)
+    {
+        client.setCredentials({
+            /* eslint-disable camelcase */
+            access_token: config.oauth2Token
+            /* eslint-enable camelcase */
         });
-    });
+        callback();
+    }
+    else
+    {
+        url = client.generateAuthUrl({
+            /* eslint-disable camelcase */
+            access_type: 'offline',
+            scope: [ 'https://www.googleapis.com/auth/drive' ]
+            /* eslint-enable camelcase */
+        });
+        console.log('1. Visit the url:', url);
+        console.log('2. You will end up at ' + config.oauthRedirectUrl + '?code=<CODE>#');
+        rl.question('Paste the code here: ', (code) => {
+            rl.close();
+            client.getToken(code, (err, tokens) => {
+                if (err) { throw err; }
+                client.setCredentials(tokens);
+                config.oauth2Token = tokens.access_token;
+                fs.writeFile(
+                    './config.json',
+                    JSON.stringify(config, false, 4)
+                );
+                callback();
+            });
+        });
+    }
 }
 
 
