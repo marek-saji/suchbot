@@ -315,6 +315,17 @@ slack.on('message', event => {
                 response("I don't know who you are, sorry.");
             });
     }
+    else if (channel.is_im || new RegExp('<@' + slack.self.id + '>').test(message))
+    {
+        let answers = [
+            'Does not compute',
+            'lol, dunno',
+            'google it',
+            'I have no idea what you mean by that'
+        ];
+        let answerIdx = ~~(Math.random() * answers.length);
+        respond(answers[answerIdx]);
+    }
 });
 
 slack.on('open', () => {
