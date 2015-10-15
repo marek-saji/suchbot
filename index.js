@@ -307,4 +307,10 @@ slack.on('error', error => {
 });
 
 slack.login();
-getLunches();
+
+getLunches().then((lunches) => {
+    console.log('Fetched lunches:');
+    lunches.forEach((lunch, nick) => {
+        console.log('- ' + nick + ' ordered ' + lunch);
+    });
+});
