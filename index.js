@@ -212,24 +212,39 @@ function getLunch (nick)
 
 
 slack.on('message', event => {
-    var user, channel;
+    var user, userName, channel, channelName;
     var isFemale;
     var message = 'message' === event.type && event.text;
-    var response;
+    var respond = function (response) {
+        if (! channel.is_im)
+        {
+            response = '@' + userName + ': ' + response;
+        }
+        channel.send(response);
+    };
 
-    if (! event.user || ! message)
+    
+
+    if (! event.user || ! event.channel || ! message)
     {
         return;
     }
 
-    console.log('Got', message);
-
-    user = slack.getUserByID(event.user);
-    channel = slack.getChannelGroupOrDMByID(event.channel);
-
     try
     {
-        response = '@' + user.name + ': ';
+        user = slack.getUserByID(event.user);
+        userName = '' + user.name;
+        if (! userName)
+        {
+            throw new Error('Got empty user name.');
+        }
+
+        channel = slack.getChannelGroupOrDMByID(event.channel);
+        channelName = '' + channel.name;
+        if (! userName)
+        {
+            throw new Error('Got empty channel name.');
+        }
     }
     catch (error)
     {
@@ -238,6 +253,20 @@ slack.on('message', event => {
         console.error('ERROR(user): ', user);
         return;
     }
+
+    // TODO log only if mention, im or about to be answered
+    console.log(
+        (new Date()).toISOString(),
+        channel.is_im
+        ? '@' + channelName
+        : channel.is_group
+        ? '!' + channelName
+        : channel.is_channel
+        ? '#' + channelName
+        : '?' + channelName,
+        '<' + userName + '>',
+        message
+    );
 
 
     if (/co .*na (obiad|lunch|lancz)/i.test(message))
@@ -250,25 +279,24 @@ slack.on('message', event => {
                 {
                     if (isFemale)
                     {
-                        channel.send(response + 'Wygląda na to, że nic dzisiaj nie zamówiłaś');
+                        respond('Wygląda na to, że nic dzisiaj nie zamówiłaś');
                     }
                     else
                     {
-                        channel.send(response + 'Wygląda na to, że nic dzisiaj nie zamówiłeś');
+                        respond('Wygląda na to, że nic dzisiaj nie zamówiłeś');
                     }
                 }
                 else
                 {
-                    channel.send(response + lunch);
+                    respond(lunch);
                 }
             })
             .catch((error) => {
                 console.log(error.stack);
-                channel.send(response + 'Nie wiem kim jesteś, sorry.');
+                respond('Nie wiem kim jesteś, sorry.');
             });
     }
-
-    if (/what('s|is) for (dinner|lunch)/i.test(message))
+    else if (/what('s|is) for (dinner|lunch)/i.test(message))
     {
         isFemale = user.name.split('.')[0].slice(-1);
 
@@ -276,15 +304,15 @@ slack.on('message', event => {
             .then(lunch => {
                 if (!lunch)
                 {
-                    channel.send(response + 'It seems that you did not order anything today.');
+                    response('It seems that you did not order anything today.');
                 }
                 else
                 {
-                    channel.send(response + lunch);
+                    response(lunch);
                 }
             })
             .catch(() => {
-                channel.send(response + "I don't know who you are, sorry.");
+                response("I don't know who you are, sorry.");
             });
     }
 });
