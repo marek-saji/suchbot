@@ -317,14 +317,25 @@ slack.on('message', event => {
     }
     else if (channel.is_im || new RegExp('<@' + slack.self.id + '>').test(message))
     {
-        let answers = [
-            'Does not compute',
-            'lol, dunno',
-            'google it',
-            'I have no idea what you mean by that'
-        ];
-        let answerIdx = ~~(Math.random() * answers.length);
-        respond(answers[answerIdx]);
+        if (/jaka jest .*pogoda/i.test(message))
+        {
+            respond('nie wiem, wyjrzyj przez okno');
+        }
+        else if (/what.* weather/i.test(message))
+        {
+            respond('dunno, look out the window');
+        }
+        else
+        {
+            let answers = [
+                'Does not compute',
+                'lol, dunno',
+                'google it',
+                'I have no idea what you mean by that'
+            ];
+            let answerIdx = ~~(Math.random() * answers.length);
+            respond(answers[answerIdx]);
+        }
     }
 });
 
