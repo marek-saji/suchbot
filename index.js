@@ -217,12 +217,27 @@ slack.on('message', event => {
     var message = 'message' === event.type && event.text;
     var response;
 
+    if (! event.user || ! message)
+    {
+        return;
+    }
+
     console.log('Got', message);
 
     user = slack.getUserByID(event.user);
     channel = slack.getChannelGroupOrDMByID(event.channel);
 
-    response = '@' + user.name + ': ';
+    try
+    {
+        response = '@' + user.name + ': ';
+    }
+    catch (error)
+    {
+        console.error('ERROR: ', error.stack);
+        console.error('ERROR(event): ', event);
+        console.error('ERROR(user): ', user);
+        return;
+    }
 
 
     if (/co .*na (obiad|lunch|lancz)/i.test(message))
