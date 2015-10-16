@@ -2,24 +2,30 @@
   "name": "suchbot",
   "version": "1.0.0",
   "description": "A bot.",
-  "main": "index.js",
-  "scripts": {
-    "start": "node --harmony index.js",
-    "test": "node_modules/.bin/eslint index.js"
-  },
+  "author": "Marek ‘saji’ Augustynowicz <marek.aug@gmail.com> (https://twitter.com/saji_)",
+  "license": "ISC",
   "keywords": [
     "slack",
     "bot",
     "lunch"
   ],
-  "author": "Marek ‘saji’ Augustynowicz <marek.aug@gmail.com> (https://twitter.com/saji_)",
-  "license": "ISC",
+  "homepage": "https://github.com/marek-saji/suchbot",
+  "bugs": "https://github.com/marek-saji/suchbot/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marek-saji/suchbot.git"
+  },
+  "main": "index.js",
+  "scripts": {
+    "start": "node --harmony index.js",
+    "test": "node_modules/.bin/eslint index.js"
+  },
   "engines": {
     "node": ">=0.12"
   },
   "dependencies": {
     "google-spreadsheets": "^0.4.2",
-    "googleapis": "^2.1.5",
+    "googleapis": "1.*",
     "slack-client": "^1.4.1"
   },
   "devDependencies": {
@@ -32,8 +38,8 @@
     },
     "rules": {
       "indent": [
-          2,
-          4
+        2,
+        4
       ],
       "quotes": [
         2,
