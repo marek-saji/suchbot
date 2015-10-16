@@ -15,6 +15,8 @@ const lunchCache = {
     items: new Map()
 };
 
+const oauthUrlRegExp = /(?:&|\?|&amp;)code=([^&]+)/;
+
 const l18n = [
     {
         questionRegExp: /co .*na (obiad|lunch|lancz)/i,
@@ -52,6 +54,28 @@ var oauth2Client;
 var rl;
 
 
+function getOAuthCodeFromUrl ()
+{
+    return new Promise((resolve, reject) => {
+        rl = readline.createInterface({
+            input: process.stdin,
+            output: process.stdout
+        });
+        rl.question('Paste the URL here: ', (url) => {
+            rl.close();
+            let urlMatch = url.match(oauthUrlRegExp);
+            if (urlMatch)
+            {
+                resolve(urlMatch[1]);
+            }
+            else
+            {
+                console.log('this does not look right, try again?');
+                getOAuthCodeFromUrl().then(resolve);
+            }
+        });
+    });
+}
 
 function connectToDrive (client)
 {
@@ -74,13 +98,10 @@ function connectToDrive (client)
                 /* eslint-enable camelcase */
             });
             console.log('1. Visit the url:', url);
-            console.log('2. You will end up at ' + config.oauthRedirectUrl + '?code=<CODE>#');
-            rl = readline.createInterface({
-                input: process.stdin,
-                output: process.stdout
-            });
-            rl.question('Paste the code here: ', (code) => {
-                rl.close();
+            console.log('2. Authorize');
+            console.log('3. You will end up at ' + config.oauthRedirectUrl + '?code=<CODE>#');
+            getOAuthCodeFromUrl().then((code) => {
+                console.log('got it.');
                 client.getToken(code, (err, tokens) => {
                     if (err)
                     {
@@ -124,6 +145,28 @@ function connectToSpreadsheets (client)
     });
 }
 
+function reconnectOnInvalidAuthKey (error)
+{
+    if ('Invalid authorization key.' === error.message)
+    {
+        console.error('Invalid authorization key.');
+        config.oauth2Token = null;
+        config.oauth2RefreshToken = null;
+        return connect();
+    }
+    else
+    {
+        throw error;
+    }
+}
+
+function connect ()
+{
+    return connectToDrive(oauth2Client)
+        .then(connectToSpreadsheets)
+        .catch(reconnectOnInvalidAuthKey);
+}
+
 function getSheetRange (client, sheet, range)
 {
     return new Promise((resolve, reject) => {
@@ -145,20 +188,7 @@ function getSheetRange (client, sheet, range)
 
 function getLunchesFromSheet ()
 {
-    return connectToDrive(oauth2Client)
-        .then(connectToSpreadsheets)
-        .catch((error) => {
-            if ('Invalid authorization key.' === error.message)
-            {
-                console.error('Invalid authorization key.');
-                // TODO refresh token and try again
-                //      why this happens so late?
-            }
-            else
-            {
-                console.error(error.stack);
-            }
-        })
+    return connect()
         .then((spreadsheet) => {
             let getLunchSheetRange = getSheetRange.bind(
                 null,
