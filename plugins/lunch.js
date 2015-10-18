@@ -80,11 +80,12 @@ function getOAuthCodeFromUrl ()
 function connectToDrive (client)
 {
     return new Promise((resolve, reject) => {
-        if (config.oauth2Token)
+        if (config.oauth2Token && config.oauth2RefreshToken)
         {
             client.setCredentials({
                 /* eslint-disable camelcase */
-                access_token: config.oauth2Token
+                access_token: config.oauth2Token,
+                refresh_token: config.oauth2RefreshToken
                 /* eslint-enable camelcase */
             });
             resolve(oauth2Client);
@@ -94,7 +95,8 @@ function connectToDrive (client)
             let url = client.generateAuthUrl({
                 /* eslint-disable camelcase */
                 access_type: 'offline',
-                scope: [ 'https://www.googleapis.com/auth/drive' ]
+                scope: [ 'https://www.googleapis.com/auth/drive' ],
+                approval_prompt: 'force',
                 /* eslint-enable camelcase */
             });
             console.log('1. Visit the url:', url);
@@ -111,6 +113,7 @@ function connectToDrive (client)
                     {
                         client.setCredentials(tokens);
                         config.oauth2Token = tokens.access_token;
+                        config.oauth2RefreshToken = tokens.refresh_token;
                         fs.writeFile(
                             './config.json',
                             JSON.stringify(config, false, 4)
