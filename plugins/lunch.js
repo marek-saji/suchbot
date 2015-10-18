@@ -313,7 +313,7 @@ function onMessage (event)
     var handled;
 
     l18n.forEach(texts => {
-        if (texts.questionRegExp.test(event.text))
+        if (texts.questionRegExp.test(event.normalizedText))
         {
             handled = true;
             getLunch(event.userName)

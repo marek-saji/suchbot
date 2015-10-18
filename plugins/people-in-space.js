@@ -59,7 +59,7 @@ function onMessage (event)
 {
     var handled = false;
     l18n.forEach(texts => {
-        if (texts.questionRegExp.test(event.text))
+        if (texts.questionRegExp.test(event.normalizedText))
         {
             getNumber()
                 .then(number => event.respond(number))

@@ -2,7 +2,7 @@
 
 const l18n = [
     {
-        questionRegExp: /jak[aą] (?:dzisiaj)? (jest|mamy) .*pogod[aeę]/i,
+        questionRegExp: /jaka\s+(?:dzisiaj\s+)?(jest|mamy)?.*pogod[ae]/i,
         answers: [
             'nie wiem, wyjrzyj przez okno'
         ]
@@ -20,7 +20,7 @@ function onMessage (event)
 {
     var handled = false;
     l18n.forEach(texts => {
-        if (texts.questionRegExp.test(event.text))
+        if (texts.questionRegExp.test(event.normalizedText))
         {
             event.respond(texts.answers);
             handled = true;

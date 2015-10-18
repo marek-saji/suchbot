@@ -26,6 +26,7 @@
   "dependencies": {
     "google-spreadsheets": "^0.4.2",
     "googleapis": "1.*",
+    "iconv": "^2.1.11",
     "slack-client": "^1.4.1"
   },
   "devDependencies": {

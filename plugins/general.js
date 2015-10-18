@@ -6,7 +6,7 @@ function onMessage (event)
 {
     var handled = false;
     qa.forEach((answers, questionRegExp) => {
-        if (questionRegExp.test(event.text))
+        if (questionRegExp.test(event.normalizedText))
         {
             event.respond(answers);
             handled = true;
@@ -21,7 +21,7 @@ function register (eventEmitter)
 }
 
 // welcome
-qa.set(/^(cze[śs][ćc]|(dzie[ńn]\s+)?dobry|siema|witam|witaj)\W*$/i, [
+qa.set(/^(czesc|(dzien\s+)?dobry|siema|witam|witaj)\W*$/i, [
     'cześć',
     'dzień dobry',
     'yo',
@@ -34,7 +34,7 @@ qa.set(/^(hi|hello|welcome)\W*$/i, [
     '\'ello'
 ]);
 // thanks
-qa.set(/^(dzi[ęe]k(uj[ęe]|i|kuwa|s))\W*$/i, [
+qa.set(/^(dziek(uje|i|kuwa|s))\W*$/i, [
     'nie ma za co',
     'nie ma sprawy'
 ]);
@@ -42,7 +42,7 @@ qa.set(/^(thank\s+you|thanks)\W*$/i, [
     "don't mention it"
 ]);
 // abuse
-qa.set(/^(jeste[śs]\s+g[łl]upia?\W*)$/i, [
+qa.set(/^(jestes\s+glupia?\W*)$/i, [
     ':cry:'
 ]);
 qa.set(/^((you|U)(\'re|\s+are|\s*R)\s+stupid)\W*$/i, [
@@ -55,7 +55,7 @@ qa.set(/^(fuck\s+(you|off))\W*$/i, [
     ':cry:'
 ]);
 // hate
-qa.set(/^(nienawidz[eę]\s+ci[eę])\W*$/i, [
+qa.set(/^(nienawidze\s+cie)\W*$/i, [
     'przykro mi to słyszeć'
 ]);
 qa.set(/^(hate\s+you)\W*$/i, [
