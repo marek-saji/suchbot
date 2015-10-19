@@ -345,7 +345,7 @@ function register (eventEmitter)
 }
 
 l18n.forEach(texts => {
-    var url = 'https://docs.google.com/spreadsheets/' + config.lunchSpreadsheetId;
+    var url = 'https://docs.google.com/spreadsheets/d/' + config.lunchSpreadsheetId;
     for (let id in texts.answers)
     {
         texts.answers[id] = texts.answers[id].map(answer => {
