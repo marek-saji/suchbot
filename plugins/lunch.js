@@ -276,7 +276,6 @@ function getLunch (nick)
 {
     return getLunches().then((lunches) => {
         let lunch = lunches.get(nick);
-        console.log(nick, lunch);
         if (! lunch && null !== lunch)
         {
             throw undefined;
