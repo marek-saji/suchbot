@@ -193,10 +193,22 @@ function getLunchesFromSheet ()
 {
     return connect()
         .then((spreadsheet) => {
-            let getLunchSheetRange = getSheetRange.bind(
+            let worksheet;
+            let getLunchSheetRange;
+
+            worksheet = spreadsheet.worksheets.find(w => {
+                return w.id === config.lunchSheetId;
+            });
+
+            if (! worksheet)
+            {
+                throw new Error('Worksheet with id=' + config.lunchSheetId + ' not found.');
+            }
+
+            getLunchSheetRange = getSheetRange.bind(
                 null,
                 oauth2Client,
-                spreadsheet.worksheets[config.lunchSheetIndex]
+                worksheet
             );
 
             return getLunchSheetRange(config.lunchCellsNicksRange)
