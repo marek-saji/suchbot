@@ -152,7 +152,7 @@ function reconnectOnInvalidAuthKey (error)
 {
     if ('Invalid authorization key.' === error.message)
     {
-        console.error('Invalid authorization key.');
+        console.error('[' + (new Date) + '] Invalid authorization key.');
         config.oauth2Token = null;
         config.oauth2RefreshToken = null;
         return connect();
