@@ -80,12 +80,13 @@ function getOAuthCodeFromUrl ()
 function connectToDrive (client)
 {
     return new Promise((resolve, reject) => {
-        if (config.oauth2Token && config.oauth2RefreshToken)
+        if (config.oauth2Token && config.oauth2RefreshToken && config.oauth2TokenExpiryTimestamp)
         {
             client.setCredentials({
                 /* eslint-disable camelcase */
                 access_token: config.oauth2Token,
-                refresh_token: config.oauth2RefreshToken
+                refresh_token: config.oauth2RefreshToken,
+                expiry_date: console.oauth2TokenExpiryTimestamp
                 /* eslint-enable camelcase */
             });
             resolve(oauth2Client);
@@ -114,6 +115,7 @@ function connectToDrive (client)
                         client.setCredentials(tokens);
                         config.oauth2Token = tokens.access_token;
                         config.oauth2RefreshToken = tokens.refresh_token;
+                        config.oauth2TokenExpiryTimestamp = tokens.expiry_date;
                         fs.writeFile(
                             './config.json',
                             JSON.stringify(config, false, 4)
