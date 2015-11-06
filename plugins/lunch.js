@@ -15,8 +15,6 @@ const lunchCache = {
     items: new Map()
 };
 
-const oauthUrlRegExp = /(?:&|\?|&amp;)code=([^&]+)/;
-
 const l18n = [
     {
         questionRegExp: /co .*na (obiad|lunch|lancz)/i,
@@ -61,18 +59,9 @@ function getOAuthCodeFromUrl ()
             input: process.stdin,
             output: process.stdout
         });
-        rl.question('Paste the URL here: ', (url) => {
+        rl.question('Paste the code here: ', url => {
             rl.close();
-            let urlMatch = url.match(oauthUrlRegExp);
-            if (urlMatch)
-            {
-                resolve(urlMatch[1]);
-            }
-            else
-            {
-                console.log('this does not look right, try again?');
-                getOAuthCodeFromUrl().then(resolve);
-            }
+	    resolve(url);
         });
     });
 }
@@ -102,9 +91,8 @@ function connectToDrive (client)
             });
             console.log('1. Visit the url:', url);
             console.log('2. Authorize');
-            console.log('3. You will end up at ' + config.oauthRedirectUrl + '?code=<CODE>#');
+            console.log('3. You will be given a code');
             getOAuthCodeFromUrl().then((code) => {
-                console.log('got it.');
                 client.getToken(code, (err, tokens) => {
                     if (err)
                     {
@@ -304,7 +292,7 @@ function onOpen ()
     oauth2Client = new google.auth.OAuth2(
         config.oauthClientId,
         config.oauthClientSecret,
-        config.oauthRedirectUrl
+        'urn:ietf:wg:oauth:2.0:oob'
     );
 
     // try to fetch, fill up the cache

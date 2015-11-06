@@ -5,10 +5,9 @@
     // 2. Create a project
     // 3. Enable Drive API
     // 4. APIs & Auth → Credentials
-    // 5. Create OAuth 2.0 client ID
+    // 5. Create "OAuth 2.0 client ID" with type "Other"
     "oauthClientId": "",
     "oauthClientSecret": "",
-    "oauthRedirectUrl": "https://example.com",
 
 
     // Google Spreadsheet with lunches
