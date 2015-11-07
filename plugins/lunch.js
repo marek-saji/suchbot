@@ -74,7 +74,7 @@ function connectToDrive (client)
             /* eslint-disable camelcase */
             access_token: config.oauth2Token,
             refresh_token: config.oauth2RefreshToken,
-            expiry_date: console.oauth2TokenExpiryTimestamp
+            expiry_date: config.oauth2TokenExpiryTimestamp
             /* eslint-enable camelcase */
         });
         return Promise.resolve(oauth2Client);
