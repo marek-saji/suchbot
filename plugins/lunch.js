@@ -8,6 +8,7 @@ const readline = require('readline');
 const googleSpreadsheets = require('google-spreadsheets');
 const google = require('googleapis');
 
+const log = require('../lib/log');
 const config = require('../config.json');
 
 const lunchCache = {
@@ -140,7 +141,7 @@ function reconnectOnInvalidAuthKey (error)
 {
     if ('Invalid authorization key.' === error.message)
     {
-        console.error('[' + (new Date) + '] Invalid authorization key.');
+        log.error(error);
         config.oauth2Token = null;
         config.oauth2RefreshToken = null;
         return connect();
@@ -217,7 +218,7 @@ function getLunchesFromSheet ()
                         break;
                     }
 
-                    console.log('Got ' + nicks.size + ' nick names from lunch spreadsheet.');
+                    log('Got ' + nicks.size + ' nick names from lunch spreadsheet.');
                     return nicks;
                 })
                 .then((nicks) => {
@@ -249,7 +250,7 @@ function getLunchesFromSheet ()
                         lunches.set(nicks.get(col), lunch);
                     }
 
-                    console.log('Got ' + lunches.size + ' lunches from lunch spreadsheet.');
+                    log('Got ' + lunches.size + ' lunches from lunch spreadsheet.');
                     return lunches;
                 });
         });
@@ -295,14 +296,14 @@ function onOpen ()
 
     // try to fetch, fill up the cache
     getLunches()
-        .then((lunches) => {
-            console.log('Lunches, at the moment:');
+        .then(lunches => {
+            log('Lunches, at the moment:');
             lunches.forEach((lunch, nick) => {
-                console.log('- @' + nick + ': ' + lunch);
+                log('- @' + nick + ': ' + lunch);
             });
         })
-        .catch((error) => {
-            console.error(error.stack);
+        .catch(error => {
+            log.error(error);
         });
 }
 
@@ -326,9 +327,9 @@ function onMessage (event)
                         event.respond(lunch);
                     }
                 })
-                .catch((stack) => {
+                .catch(error => {
                     event.respond(texts.answers.noNick);
-                    console.error(error.stack);
+                    log.error(error);
                 });
         }
     });
