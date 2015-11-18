@@ -17,7 +17,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "start": "node --harmony index.js",
+    "start": "npm install && node --harmony index.js",
     "test": "node_modules/.bin/eslint index.js"
   },
   "engines": {
