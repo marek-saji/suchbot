@@ -1,6 +1,6 @@
 'use strict';
 
-const REFRESH_RATE_S = 5 * 60 * 60;
+const REFRESH_RATE_MS = 5 * 60 * 1000;
 
 const fs = require('fs');
 const readline = require('readline');
@@ -258,7 +258,7 @@ function getLunchesFromSheet ()
 
 function getLunches ()
 {
-    if (lunchCache.timestamp > Date.now() - REFRESH_RATE_S)
+    if (lunchCache.timestamp > Date.now() - REFRESH_RATE_MS)
     {
         return Promise.resolve(lunchCache.items);
     }
