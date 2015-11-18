@@ -29,7 +29,7 @@ const l18n = [
             ],
             noNick: [
                 'Nie widzę cię w zamówieniach',
-                'Wiesz, że trzeba wpisać nicka ze slacka w zamówieniach?',
+                'Wiesz, że trzeba wpisać nazwę użytkownika w zamówieniach?',
                 'Nie wiem kim jesteś, sorry :confused:'
             ]
         }
@@ -45,7 +45,7 @@ const l18n = [
             noNick: [
                 "I don't know who you are, sorry :confused:",
                 "I don't see you in the orders",
-                'You do know that you have to fill in your slack nick name in the orders, right?',
+                'You do know that you have to fill in your user name in the orders, right?',
             ]
         },
     },
