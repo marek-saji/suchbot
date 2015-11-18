@@ -33,6 +33,10 @@ qa.set(/^(hi|hello|welcome)\W*$/i, [
     'hello',
     '\'ello'
 ]);
+// pings
+qa.set(/^\W*ping\W*$/i, [
+    'pong'
+]);
 // thanks
 qa.set(/^(dziek(uje|i|kuwa|s))\W*$/i, [
     'nie ma za co',
@@ -67,6 +71,11 @@ qa.set(/:-?\(|:(disappointed):/i, [
 ]);
 qa.set(/;-?\(|:(cry|crying_cat_face):/i, [
     'nie płacz…'
+]);
+qa.set(/^\W*:(simple_)?smiley?(_cat)?:\W*$/i, [
+    ':smile:',
+    ':smile_cat:',
+    ':simple_smile:'
 ]);
 
 module.exports = {
