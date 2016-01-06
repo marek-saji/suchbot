@@ -6,23 +6,28 @@
     // 3. Enable Drive API
     // 4. APIs & Auth → Credentials
     // 5. Create "OAuth 2.0 client ID" with type "Other"
-    "oauthClientId": "",
-    "oauthClientSecret": "",
+    "oauthClientId": null,
+    "oauthClientSecret": null,
 
 
     // Google Spreadsheet with lunches
     // You will find it in spreadsheet's URL
-    "lunchSpreadsheetId": "",
+    "lunchSpreadsheetId": null,
     // e.g. R5C2:R5C25
-    "lunchCellsNicksRange": "",
-    "lunchCellsRange": "",
-    "lunchSheetIndex": 0,
+    "lunchCellsNicksRange": null,
+    "lunchCellsRange": null,
+    // You will find it in spreadsheet's URL
+    "lunchSheetId": null,
 
 
     // Slack
-    //
-    // Head to https://YOUR_SUBDOMAIN.slack.com/services/new/bot
-    "slackToken": ""
+    "backends": {
+        "slack": {
+            "type": "slack",
+            // Head to https://YOUR_SUBDOMAIN.slack.com/services/new/bot
+            "token": null
+        }
+    }
 
 
     // Plugins

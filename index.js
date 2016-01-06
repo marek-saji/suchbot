@@ -1,13 +1,31 @@
 'use strict';
 
-const slack = require('./lib/slack');
-const slackEventOpen = require('./lib/slackEvents/open');
-const slackEventMessage = require('./lib/slackEvents/message');
-const slackEventError = require('./lib/slackEvents/error');
+const config = require('./config.json');
 
+const plugins = require('./lib/plugins');
 
-slack.on('open', slackEventOpen);
-slack.on('error', slackEventError);
-slack.on('message', slackEventMessage);
+const backendEngines = {};
+const backends = {};
 
-slack.login();
+for (let backendName in config.backends)
+{
+    let backendConfig = config.backends[ backendName ];
+    let backendType = backendConfig.type;
+    let eventEmitter;
+
+    if (undefined === backendEngines[ backendType ])
+    {
+        backendEngines[backendType] = require('./lib/backends/' + backendType);
+    }
+
+    // FIXME eventEmitter = new EventEmitter; or sth like that
+    eventEmitter = require('./lib/eventEmitter');
+
+    plugins.register(eventEmitter);
+
+    backends[backendName] = backendEngines[backendType].start(
+        backendName,
+        backendConfig,
+        eventEmitter
+    );
+}
