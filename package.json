@@ -18,6 +18,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm install && node --harmony index.js",
+    "debug": "npm install && node --harmony --debug index.js",
     "test": "node_modules/.bin/eslint index.js"
   },
   "engines": {
