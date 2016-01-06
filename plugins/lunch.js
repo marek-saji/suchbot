@@ -11,8 +11,6 @@ const google = require('googleapis');
 const log = require('../lib/log');
 const config = require('../config.json');
 
-const slack = require('../lib/slack');
-
 const lunchCache = {
     timestamp: null,
     items: new Map()
@@ -342,49 +340,8 @@ function onMessage (event)
 function register (eventEmitter)
 {
     eventEmitter.on('open', onOpen);
-    eventEmitter.on('open', msgLunchesAtLunchTime);
     eventEmitter.on('directedmessage', onMessage);
     eventEmitter.on('generalmessage', onMessage);
-}
-
-function msgLunchesAtLunchTime ()
-{
-    let now = new Date();
-    let ms = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 13, 50, 0, 0) - now; // FIXME Move to config
-    // If already after lunch time, add a day
-    // leave a second marigin to make sure we don’t schedule for “now”
-    if (ms < 1000)
-    {
-        ms += 24*60*60*1000;
-    }
-    log('Next lunch time is:', new Date(+now + ms));
-
-    setTimeout(
-        () => {
-            // schedule the next day
-            msgLunchesAtLunchTime();
-            msgTodaysLunches();
-        },
-        ms
-    );
-}
-
-function msgTodaysLunches ()
-{
-    return getLunches()
-        .then(lunches => {
-            lunches.forEach((lunch, nick) => {
-                if (nick !== 'marek.augustynowicz') return; // FIXME debug
-                if (lunch)
-                {
-                    let dm = slack.getDMByName(nick)
-                    if (dm)
-                    {
-                        dm.send(lunch + ', bon appétit :smile:');
-                    }
-                }
-            });
-        });
 }
 
 l18n.forEach(texts => {
