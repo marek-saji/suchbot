@@ -2,7 +2,6 @@
 
 const config = require('./config.json');
 
-const EventEmitter = require('./lib/EventEmitter');
 const plugins = require('./lib/plugins');
 
 const backendEngines = {};
@@ -19,7 +18,8 @@ for (let backendName in config.backends)
         backendEngines[backendType] = require('./lib/backends/' + backendType);
     }
 
-    eventEmitter = new EventEmitter();
+    // FIXME eventEmitter = new EventEmitter; or sth like that
+    eventEmitter = require('./lib/eventEmitter');
 
     plugins.register(eventEmitter);
 
