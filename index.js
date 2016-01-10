@@ -1,13 +1,35 @@
 'use strict';
 
-const slack = require('./lib/slack');
-const slackEventOpen = require('./lib/slackEvents/open');
-const slackEventMessage = require('./lib/slackEvents/message');
-const slackEventError = require('./lib/slackEvents/error');
+const config = require('./config.json');
 
+const plugins = require('./lib/plugins');
+const EventEmitter = require('./lib/EventEmitter');
+const Backend = require('./lib/Backend');
 
-slack.on('open', slackEventOpen);
-slack.on('error', slackEventError);
-slack.on('message', slackEventMessage);
+const backends = {};
 
-slack.login();
+for (let backendName in config.backends)
+{
+    let backendConfig = config.backends[ backendName ];
+    let backendType = backendConfig.type;
+    let ThisBackend;
+    let eventEmitter;
+
+    eventEmitter = new EventEmitter();;
+
+    plugins.register(eventEmitter);
+
+    ThisBackend = require('./lib/backends/' + backendType);
+    if (
+        ! ThisBackend ||
+        ! ( ThisBackend.prototype instanceof Backend )
+    )
+    {
+        throw new Error('Loaded backend name="' + backendName + '", type="' + backendType + '", but is not instanceo of Backend');
+    }
+    backends[backendName] = new ThisBackend(
+        backendName,
+        eventEmitter,
+        backendConfig
+    );
+}
