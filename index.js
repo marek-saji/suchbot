@@ -2,11 +2,14 @@
 
 const config = require('./config.json');
 
-const plugins = require('./lib/plugins');
 const EventEmitter = require('./lib/EventEmitter');
 const Backend = require('./lib/Backend');
 
+const plugins = new Map();
 const backends = {};
+
+config.plugins
+    .forEach(name => plugins.set(name, require('./lib/plugins/' + name)));
 
 for (let backendName in config.backends)
 {
@@ -16,8 +19,6 @@ for (let backendName in config.backends)
     let eventEmitter;
 
     eventEmitter = new EventEmitter();;
-
-    plugins.register(eventEmitter);
 
     ThisBackend = require('./lib/backends/' + backendType);
     if (
@@ -30,6 +31,7 @@ for (let backendName in config.backends)
     backends[backendName] = new ThisBackend(
         backendName,
         eventEmitter,
+        plugins,
         backendConfig
     );
 }
