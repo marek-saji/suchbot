@@ -25,10 +25,10 @@
     "node": ">=0.12"
   },
   "dependencies": {
+    "@slack/client": "^3.1.0",
     "google-spreadsheets": "^0.4.2",
     "googleapis": "1.*",
-    "iconv": "^2.1.11",
-    "slack-client": "^1.4.1"
+    "iconv": "^2.1.11"
   },
   "devDependencies": {
     "eslint": "^1.6.0"
