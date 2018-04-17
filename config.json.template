@@ -31,7 +31,7 @@
             // Head to https://YOUR_SUBDOMAIN.slack.com/services/new/bot
             "token": null
         }
-    }
+    },
 
 
     // Plugins
@@ -42,7 +42,7 @@
         "about",
         "general",
         "fallback"
-    ],
+    ]
 
 
     // Remove comments before using as config.json as they are illegal
