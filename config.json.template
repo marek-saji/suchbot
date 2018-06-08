@@ -11,17 +11,19 @@
 
 
     // Google Spreadsheets with lunches
-    "lunchSpreadsheets": [
-        {
-            // You will find it in spreadsheet's URL
-            "id": "1fpgB7iBJcUgCf4I1-p1-YHLtxQZCUq7bpJJd2g8xQPA",
-            // e.g. R5C2:R5C25
-            "nicksRange": "R5C2:R5C28",
-            "range": "R6C2:R10C28",
-            // You will have to obtain it with API
-            "sheetId": "od6"
-        }
-    ],
+    "lunch": {
+        "spreadsheets": [
+            {
+                // You will find it in spreadsheet's URL
+                "id": "1fpgB7iBJcUgCf4I1-p1-YHLtxQZCUq7bpJJd2g8xQPA",
+                // e.g. R5C2:R5C25
+                "nicksRange": "R5C2:R5C28",
+                "range": "R6C2:R10C28",
+                // You will have to obtain it with API
+                "sheetId": "od6"
+            }
+        ],
+    },
 
 
     // Slack
