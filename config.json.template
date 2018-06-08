@@ -21,7 +21,9 @@
                 "nicksRange": "R5C2:R5C28",
                 "range": "R6C2:R10C28",
                 // You will have to obtain it with API
-                "sheetId": "od6"
+                "sheetId": "od6",
+                // Ignore values matching this regular expression
+                "ignoredValuesRegExp": "^-$"
             }
         ],
     },
