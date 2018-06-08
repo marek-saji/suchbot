@@ -12,6 +12,7 @@
 
     // Google Spreadsheets with lunches
     "lunch": {
+        "time": "13:15",
         "spreadsheets": [
             {
                 // You will find it in spreadsheet's URL
