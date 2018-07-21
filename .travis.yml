@@ -1,7 +1,10 @@
 language: node_js
 node_js:
-  - lts
-  - latest
+  - 6
+  - 7
+  - 8
+  - 9
+  - 10
 before_script:
   - npm install --dev
 sudo: false
