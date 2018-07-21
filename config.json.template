@@ -29,6 +29,13 @@
     },
 
 
+    "wolfram": {
+        // Generate at http://developer.wolframalpha.com/portal/myapps/
+        // There’s free account good for 2000 requests per month
+        "appId": ""
+    },
+
+
     // Slack
     "backends": {
         "slack": {
@@ -46,6 +53,7 @@
         "people-in-space",
         "about",
         "general",
+        "wolfram",
         "fallback"
     ]
 
