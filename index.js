@@ -9,6 +9,7 @@ const plugins = new Map();
 const backends = {};
 
 config.plugins
+    // eslint-disable-next-line global-require
     .forEach(name => plugins.set(name, require('./lib/plugins/' + name)));
 
 for (let backendName in config.backends)
@@ -18,8 +19,9 @@ for (let backendName in config.backends)
     let ThisBackend;
     let eventEmitter;
 
-    eventEmitter = new EventEmitter();;
+    eventEmitter = new EventEmitter();
 
+    // eslint-disable-next-line global-require
     ThisBackend = require('./lib/backends/' + backendType);
     if (
         ! ThisBackend ||
