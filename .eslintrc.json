@@ -28,7 +28,7 @@
             "error",
             "always"
         ],
-        "brace-style": ["error", "allman"],
+        "brace-style": "off",
         "callback-return": "error",
         "camelcase": "error",
         "capitalized-comments": "off",
