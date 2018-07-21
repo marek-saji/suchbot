@@ -31,7 +31,7 @@
     "transliteration": "^1.6.5"
   },
   "devDependencies": {
-    "eslint": "^1.6.0"
+    "eslint": "^5.2.0"
   },
   "eslintConfig": {
     "env": {
