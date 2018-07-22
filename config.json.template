@@ -17,11 +17,10 @@
             {
                 // You will find it in spreadsheet's URL
                 "id": "1fpgB7iBJcUgCf4I1-p1-YHLtxQZCUq7bpJJd2g8xQPA",
-                // e.g. R5C2:R5C25
-                "nicksRange": "R5C2:R5C28",
-                "range": "R6C2:R10C28",
-                // You will have to obtain it with API
-                "sheetId": "od6",
+                // If orders are not in the first sheet, prefix with
+                // "SheetName!", just like in Spreadsheets.
+                "nicksRange": "C4:4",
+                "range": "C5:9",
                 // Ignore values matching this regular expression
                 "ignoredValuesRegExp": "^-$"
             }
