@@ -1,6 +1,8 @@
 /config.json
 /config.js
 
+/ecosystem.config.deploy.js
+
 /npm-debug.log
 /node_modules
 
