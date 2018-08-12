@@ -19,7 +19,8 @@
   "scripts": {
     "start": "npm install && node --harmony index.js",
     "debug": "npm install && node --harmony --inspect index.js",
-    "test": "node_modules/.bin/eslint ."
+    "test": "node_modules/.bin/eslint .",
+    "deploy": "npm version \"${@:-patch}\" && git push && git push --tags && pm2 deploy production"
   },
   "engines": {
     "node": ">=0.12"
