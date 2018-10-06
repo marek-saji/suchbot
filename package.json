@@ -19,7 +19,9 @@
   "scripts": {
     "start": "npm install && node index.js",
     "debug": "npm install && node --inspect index.js",
-    "test": "node_modules/.bin/eslint .",
+    "lint": "eslint .",
+    "unit-test": "find test -type f -printf '\\n%p\\n\\n' -exec node {} \\;",
+    "test": "npm run lint && npm run unit-test",
     "deploy": "sh -c 'git pull --tags && npm version \"${@:-patch}\" && git push && git push --tags && pm2 deploy production' --"
   },
   "engines": {
