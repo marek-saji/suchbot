@@ -7,5 +7,6 @@
 /node_modules
 
 /Session.vim
+/tags
 *.swp
 *~
