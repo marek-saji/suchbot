@@ -21,7 +21,11 @@ module.exports = {
         {
             name: 'suchbot',
             script: 'index.js',
-            watch: true
+            watch: [
+                'index.js',
+                'lib',
+                'node_modules',
+            ],
         }
     ],
     deploy: deployConfig,
