@@ -14,7 +14,7 @@ function test (testFunction)
     try
     {
         testFunction();
-        process.stdout.write('\r✅\n');
+        process.stdout.write('\r✅ ' + testFunction.name + '\n');
         winCount += 1;
     }
     catch (error)
@@ -24,7 +24,7 @@ function test (testFunction)
             process.stdout.write('\n');
             throw error;
         }
-        process.stdout.write('\r❌\n');
+        process.stdout.write('\r❌ ' + testFunction.name + '\n');
         process.stdout.write(error.message + '\n');
         failCount += 1;
     }
