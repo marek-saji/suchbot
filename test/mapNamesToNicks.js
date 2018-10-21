@@ -48,7 +48,7 @@ function summary ()
 
 test(function returnsExactMatch () {
     const nickToNamesMap = new Map([
-        ['A', ['John Joseph Smith']],
+        ['A', {names: ['John Joseph Smith']}],
     ]);
 
     const names = [
@@ -66,7 +66,7 @@ test(function returnsExactMatch () {
 
 test(function ignoresCase () {
     const nickToNamesMap = new Map([
-        ['A', ['john joseph smith']],
+        ['A', {names: ['john joseph smith']}],
     ]);
 
     const names = [
@@ -84,7 +84,7 @@ test(function ignoresCase () {
 
 test(function ignoresDiacritics () {
     const nickToNamesMap = new Map([
-        ['A', ['Jóhń Jósęph Śmith€']],
+        ['A', {names: ['Jóhń Jósęph Śmith€']}],
     ]);
 
     const names = [
@@ -102,7 +102,7 @@ test(function ignoresDiacritics () {
 
 test(function returnsEmptyWithNoMatches () {
     const nickToNamesMap = new Map([
-        ['A', ['John Joseph Smith']],
+        ['A', {names: ['John Joseph Smith']}],
     ]);
 
     const names = [
@@ -118,8 +118,8 @@ test(function returnsEmptyWithNoMatches () {
 
 test(function returnsEmptyWithMultipleExactMatches () {
     const nickToNamesMap = new Map([
-        ['A', ['John Joseph Smith']],
-        ['B', ['John Joseph Smith']],
+        ['A', {names: ['John Joseph Smith']}],
+        ['B', {names: ['John Joseph Smith']}],
     ]);
 
     const names = [
@@ -135,7 +135,7 @@ test(function returnsEmptyWithMultipleExactMatches () {
 
 test(function returnsFirstAndLastPartMatch () {
     const nickToNamesMap = new Map([
-        ['A', ['John Joseph Smith']],
+        ['A', {names: ['John Joseph Smith']}],
     ]);
 
     const names = [
@@ -153,7 +153,7 @@ test(function returnsFirstAndLastPartMatch () {
 
 test(function returnsLastAndFirstPartMatch () {
     const nickToNamesMap = new Map([
-        ['A', ['John Joseph Smith']],
+        ['A', {names: ['John Joseph Smith']}],
     ]);
 
     const names = [
@@ -171,7 +171,7 @@ test(function returnsLastAndFirstPartMatch () {
 
 test(function returnsLastPartMatch () {
     const nickToNamesMap = new Map([
-        ['A', ['John Joseph Smith']],
+        ['A', {names: ['John Joseph Smith']}],
     ]);
 
     const names = [
@@ -189,7 +189,7 @@ test(function returnsLastPartMatch () {
 
 test(function returnsFirstPartMatch () {
     const nickToNamesMap = new Map([
-        ['A', ['John Joseph Smith']],
+        ['A', {names: ['John Joseph Smith']}],
     ]);
 
     const names = [
