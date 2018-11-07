@@ -8,6 +8,18 @@ const mapNamesToNicks = require('../lib/mapNamesToNicks');
 let winCount = 0;
 let failCount = 0;
 
+// Promote unhandled promise rejections to errors
+process.on('unhandledRejection', error => {
+    throw error;
+});
+
+process.on('uncaughtException', error => {
+    process.stdout.write('\n');
+    process.stdout.write(error.stack + '\n');
+    // eslint-disable-next-line no-process-exit
+    process.exit(1);
+});
+
 function test (testFunction)
 {
     process.stdout.write('   ' + testFunction.name + ' ');
@@ -42,6 +54,9 @@ function summary ()
         process.stdout.write('🎉');
     }
     process.stdout.write(' ' + (winCount + failCount) + ' tests ran. ' + failCount + ' tests failed.\n')
+
+    // eslint-disable-next-line no-process-exit
+    process.exit(failCount > 0 ? 1 : 0);
 }
 
 
