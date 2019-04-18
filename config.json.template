@@ -1,4 +1,7 @@
 {
+    // Optional. Defaults to 3000
+    //"httpPort": 3000,
+
     // Google OAuth2
     //
     // 1. Head to https://code.google.com/apis/console
@@ -41,6 +44,21 @@
             "type": "slack",
             // Head to https://YOUR_SUBDOMAIN.slack.com/services/new/bot
             "token": null
+        },
+        "google-hangouts-chat": {
+            "type": "google-hangouts-chat",
+            "route": "/your-secret-path",
+            "botName": "Suchbot"
+            // Enable Hangouts Chat API for your organization and
+            // configure your bot choosing:
+            // - “Bot name” as specified above as `botName`
+            // - “Connection settings”: “Bot URL”
+            //   Enter a public https where this server can be reached
+            //   and route specified above as `route`.
+            //   Note that this project exposes only http server,
+            //   you will have to use something like traefik for https.
+            // For some more information see
+            // https://developers.google.com/hangouts/chat/how-tos/bots-publish
         }
     },
 

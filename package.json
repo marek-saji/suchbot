@@ -29,7 +29,9 @@
   },
   "dependencies": {
     "@slack/client": "^4.3.1",
+    "body-parser": "^1.18.3",
     "escape-string-regexp": "^1.0.5",
+    "express": "^4.16.4",
     "googleapis": "^32.0.0",
     "transliteration": "^1.6.5",
     "wolfram-alpha-api": "https://products.wolframalpha.com/api/libraries/javascript/wolfram-alpha-api-1.0.0-rc.1.tgz"
