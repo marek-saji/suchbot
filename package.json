@@ -28,7 +28,8 @@
     "node": ">=0.12"
   },
   "dependencies": {
-    "@slack/client": "^4.3.1",
+    "@slack/rtm-api": "^5.0.5",
+    "@slack/web-api": "^5.10.0",
     "escape-string-regexp": "^1.0.5",
     "googleapis": "^43.0.0",
     "mem": "^5.1.1",
