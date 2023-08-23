@@ -1,6 +1,8 @@
 such bot
 ========
 
+📢 **No longer actively maintained.**
+
 Multi-purpose pluggable slack bot.
 
 [![CI](https://github.com/marek-saji/suchbot/actions/workflows/ci.yml/badge.svg)](https://github.com/marek-saji/suchbot/actions/workflows/ci.yml)
